@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel to JMX</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+    <table class="table table-striped">
+<!--        <thead>
+        <tr>
+            <th scope="col">Device</th>
+            <th scope="col">Module</th>
+            <th scope="col">Update</th>
+            <th scope="col">URL</th>
+            <th scope="col">Description</th>
+            <th scope="col">etc</th>
+
+        </tr>
+        </thead>-->
+        <tbody>
+        <tr th:each="data : ${datas}" >
+            <td th:text="${data.device}"></td>
+            <td th:text="${data.module}"></td>
+            <td th:text="${data.update}"></td>
+            <td th:text="${data.url}"></td>
+            <td th:text="${data.description}"></td>
+            <td th:text="${data.etc}"></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
