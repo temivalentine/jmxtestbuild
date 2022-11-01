@@ -4,10 +4,8 @@ import com.jmxtestbuilder.toy.dto.*;
 import com.jmxtestbuilder.toy.utils.GenericWrapper;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.namespace.QName;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,16 +26,13 @@ public class Marsharling {
         File file = new File("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/test.jmx");
 
         JmeterTestPlan jmeterTestPlan = new JmeterTestPlan();
-        HashTree hashTree = new HashTree();
-        HashTree hashTree2 = new HashTree();
-
         TestPlan testPlan = new TestPlan();
         HeaderManager headerManager = new HeaderManager();
         CollectionProp collectionProp = new CollectionProp();
         ElementProp elementProp = new ElementProp();
 
+        List<JmeterTestPlan> jlist = new ArrayList<>();
         List<TestPlan> tlist = new ArrayList<>();
-        List<HashTree> hlist = new ArrayList<>();
         List<HeaderManager> headlist = new ArrayList<>();
         List<CollectionProp> clist = new ArrayList<>();
         List<ElementProp> elist = new ArrayList<>();
@@ -63,12 +58,9 @@ public class Marsharling {
         headerManager.setCollectionProps(clist);
         headlist.add(headerManager);
 
-        hashTree.setTestPlan(tlist);
-        hashTree2.setHeaderManager(headlist);
-        hlist.add(hashTree);
-        hlist.add(hashTree2);
-
-        jmeterTestPlan.setHashTrees(hlist);
+        jmeterTestPlan.setTestPlan(tlist);
+        jmeterTestPlan.setHeaderManager(headlist);
+        jlist.add(jmeterTestPlan);
 
         jc = JAXBContext.newInstance(GenericWrapper.class, JmeterTestPlan.class);
 
@@ -77,16 +69,15 @@ public class Marsharling {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 //        marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 
-        marshal(marshaller, hlist, "jmeterTestPlan version=\"1.2\" properties=\"5.0\" jmeter=\"5.4.3\"", file);
+//        marshal(marshaller, jlist, "jmeterTestPlan version=\"1.2\" properties=\"5.0\" jmeter=\"5.4.3\"", file);
+        marshaller.marshal(jmeterTestPlan, file);
 
 //        System.out.println(sb.toString());
     }
 
-    private static void marshal(Marshaller marshaller, List<?> list, String name, File file) throws JAXBException {
-        QName qName = new QName(name);
-        GenericWrapper genericWrapper = new GenericWrapper(list);
-        JAXBElement<GenericWrapper> jaxbElement = new JAXBElement<GenericWrapper>(qName, GenericWrapper.class, genericWrapper);
-        marshaller.marshal(jaxbElement, file);
-    }
-
+//    private static void marshal(Marshaller marshaller, List<?> list, String name, File file) throws JAXBException {
+//        QName qName = new QName(name);
+//        GenericWrapper genericWrapper = new GenericWrapper(list);
+//        JAXBElement<GenericWrapper> jaxbElement = new JAXBElement<GenericWrapper>(qName, GenericWrapper.class, genericWrapper);
+//        marshaller.marshal(jaxbElement, file);
 }
