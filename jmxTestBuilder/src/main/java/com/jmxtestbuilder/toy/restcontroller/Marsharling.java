@@ -1,7 +1,6 @@
 package com.jmxtestbuilder.toy.restcontroller;
 
 import com.jmxtestbuilder.toy.dto.*;
-import com.jmxtestbuilder.toy.utils.GenericWrapper;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -39,15 +38,15 @@ public class Marsharling {
 
 
         //TestPlan Atrribute
-        testPlan.setGuiclass("TestPlanGui");
-        testPlan.setTestclass("TestPlan");
-        testPlan.setTestname("역직구성능테스트MC");
-        testPlan.setEnabled("true");
-        //TestPlan
-        testPlan.setBoolProp("");
-        testPlan.setElementProp("false");
-        testPlan.setStringProp("");
-        tlist.add(testPlan);
+//        testPlan.setGuiclass("TestPlanGui");
+//        testPlan.setTestclass("TestPlan");
+//        testPlan.setTestname("역직구성능테스트MC");
+//        testPlan.setEnabled("true");
+//        //TestPlan
+//        testPlan.setBoolProp("");
+//        testPlan.setElementProp("false");
+//        testPlan.setStringProp("");
+//        tlist.add(testPlan);
 
         elementProp.setStringProp("abcdefg");
         elist.add(elementProp);
@@ -58,11 +57,12 @@ public class Marsharling {
         headerManager.setCollectionProps(clist);
         headlist.add(headerManager);
 
-        jmeterTestPlan.setTestPlan(tlist);
-        jmeterTestPlan.setHeaderManager(headlist);
+//        jmeterTestPlan.setTestPlan(tlist);
+//        jmeterTestPlan.setHeaderManager(headlist);
         jlist.add(jmeterTestPlan);
 
-        jc = JAXBContext.newInstance(GenericWrapper.class, JmeterTestPlan.class);
+        jc = JAXBContext.newInstance(JmeterTestPlan.class);
+//        jc = JAXBContext.newInstance(GenericWrapper.class, JmeterTestPlan.class);
 
         marshaller = jc.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_ENCODING, "utf-8");
