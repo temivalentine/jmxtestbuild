@@ -54,7 +54,7 @@ public class Marsharling {
         collectionProp.setElementProp(elist);
         clist.add(collectionProp);
 
-        headerManager.setCollectionProps(clist);
+//        headerManager.setCollectionProps(clist);
         headlist.add(headerManager);
 
 //        jmeterTestPlan.setTestPlan(tlist);
@@ -74,10 +74,4 @@ public class Marsharling {
 
 //        System.out.println(sb.toString());
     }
-
-//    private static void marshal(Marshaller marshaller, List<?> list, String name, File file) throws JAXBException {
-//        QName qName = new QName(name);
-//        GenericWrapper genericWrapper = new GenericWrapper(list);
-//        JAXBElement<GenericWrapper> jaxbElement = new JAXBElement<GenericWrapper>(qName, GenericWrapper.class, genericWrapper);
-//        marshaller.marshal(jaxbElement, file);
 }

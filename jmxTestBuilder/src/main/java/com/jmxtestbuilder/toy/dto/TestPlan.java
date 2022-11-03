@@ -2,15 +2,13 @@ package com.jmxtestbuilder.toy.dto;
 
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @Data
 @XmlRootElement(name = "TestPlan")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TestPlan {
+public class TestPlan<T> {
 
     private String stringProp;
     private String boolProp;
@@ -27,5 +25,9 @@ public class TestPlan {
 
     @XmlAttribute
     private String enabled;
+
+    @XmlElementWrapper(name = "hashTree")
+    @XmlAnyElement(lax = true)
+    List<T> list;
 
 }
