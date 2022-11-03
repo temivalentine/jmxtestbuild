@@ -1,7 +1,8 @@
 package com.jmxtestbuilder.toy.webcontroller;
 
 
-import com.jmxtestbuilder.toy.dto.*;
+import com.jmxtestbuilder.toy.dto.HashTree;
+import com.jmxtestbuilder.toy.dto.HttpRequest;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -17,49 +18,30 @@ public class ListTypeMarsharling {
 
     public static void marshal() {
 
-        List list = new ArrayList();
-
-        JmeterTestPlan jmeterTestPlan = new JmeterTestPlan();
         HashTree hashTree = new HashTree();
-        TestPlan testPlan = new TestPlan();
-        HeaderManager headerManager = new HeaderManager();
-        CollectionProp collectionProp = new CollectionProp();
-        ElementProp elementProp = new ElementProp();
+        HttpRequest httpRequest = new HttpRequest();
+        HttpRequest httpRequest2 = httpRequest;
 
-        jmeterTestPlan.setVersion("1.2");
-        jmeterTestPlan.setProperties("5.0");
-        jmeterTestPlan.setJmeter("5.4.3");
+        List<HttpRequest> list = new ArrayList<>();
 
-        testPlan.setGuiclass("TestPlanGui");
-        testPlan.setTestclass("TestPlan");
-        testPlan.setTestname("역직구성능테스트MC");
-        testPlan.setEnabled("true");
-        testPlan.setBoolProp("");
-        testPlan.setElementProp("false");
-        testPlan.setStringProp("");
+        httpRequest.setGuiclass("HttpTestSampleGui");
+        httpRequest.setTestclass("HTTPSamplerProxy");
+        httpRequest.setTestname("HTTP Request");
+        httpRequest.setEnabled("true");
+        httpRequest.setTest("test");
 
-//        elementProp.setStringProp("abcd");
 
-//        collectionProp.setElementProp();
-
-//        headerManager.setCollectionProps();
-
-        headerManager.setHeadStyle("headstyle");
-        list.add(headerManager);
+        list.add(httpRequest);
+        list.add(httpRequest2);
         hashTree.setList(list);
 
-
-        list.add(testPlan);
-        jmeterTestPlan.setList(list);
-//        jmeterTestPlan.setList(testPlan);
-
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(JmeterTestPlan.class, TestPlan.class, HashTree.class, HeaderManager.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(HashTree.class, HttpRequest.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             StringWriter sw = new StringWriter();
-            marshaller.marshal(jmeterTestPlan, sw);
+            marshaller.marshal(hashTree, sw);
             System.out.println(sw);
 
         } catch (JAXBException e) {
