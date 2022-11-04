@@ -3,6 +3,7 @@ package com.jmxtestbuilder.toy.webcontroller;
 
 import com.jmxtestbuilder.toy.dto.ThreadGroup;
 import com.jmxtestbuilder.toy.dto.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -17,7 +18,6 @@ public class ListTypeMarsharling {
     }
 
     public static void marshal() {
-
 
         BoolProp boolProp = new BoolProp();
         boolProp.setName("HTTPArgument.always_encode");
@@ -368,7 +368,6 @@ public class ListTypeMarsharling {
         threadGroupHashTreeList.add(threadGroupHashTree);
         testPlanHashTree.setThreadGroupHashTreeList(threadGroupHashTreeList);
 
-
         // JmeterTestPlan
         JmeterTestPlan jmeterTestPlan = new JmeterTestPlan();
         jmeterTestPlan.setVersion("1.2");
@@ -380,7 +379,6 @@ public class ListTypeMarsharling {
         List<TestPlanHashTree> testPlanHashTreeList = new ArrayList<>();
         testPlanHashTreeList.add(testPlanHashTree);
         jmeterTestPlan.setTestPlanHashTreeList(testPlanHashTreeList);
-
 
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(JmeterTestPlan.class);
@@ -399,4 +397,12 @@ public class ListTypeMarsharling {
         }
     }
 
+    //HTTP Request method()
+    public HTTPSamplerProxy addHttpSampleProxy(@RequestParam("URL") String url, List<ElementProp> elementPropList,
+                                               List<StringProp> stringPropList, List<BoolProp> boolPropList) {
+        HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
+
+        
+        return httpSamplerProxy;
+    }
 }

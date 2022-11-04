@@ -40,6 +40,7 @@ public class BasicRestController {
                     String columnName = header.getCell(j).toString();
                     String columnValue = row.getCell(j).toString();
                     rowJsonObject.put(columnName, columnValue);
+//                    System.out.println(rowJsonObject);
                 }
                 dataList.add(rowJsonObject);
             }

@@ -27,7 +27,7 @@ public class BasicWebController {
     }
 
 
-    @PostMapping("/excel/read")
+    @PostMapping("/view/read")
     public String readExcel(@RequestParam("file") MultipartFile file, Model model) throws IOException {
         List<ExcelData> dataList = new ArrayList<>();
 
