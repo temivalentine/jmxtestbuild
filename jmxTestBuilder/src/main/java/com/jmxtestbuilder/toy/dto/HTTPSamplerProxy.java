@@ -5,34 +5,33 @@ import lombok.Data;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
-@Data
-@XmlRootElement(name = "TestPlan")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class TestPlan {
 
-    @XmlAttribute
+@Data
+@XmlRootElement(name = "HTTPSamplerProxy")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class HTTPSamplerProxy {
+
+    @XmlAttribute(name = "guiclass")
     private String guiclass;
 
-    @XmlAttribute
+    @XmlAttribute(name = "testclass")
     private String testclass;
 
-    @XmlAttribute
+    @XmlAttribute(name = "testname")
     private String testname;
 
-    @XmlAttribute
+    @XmlAttribute(name = "enabled")
     private String enabled;
 
     @XmlElement(name = "elementProp")
     private List<ElementProp> elementPropList;
 
     @XmlElement(name = "stringProp")
-    private List<StringProp> stringPropList;
+    private List<StringProp> httpStringProp;
 
     @XmlElement(name = "boolProp")
-    private List<BoolProp> boolPropList;
+    private List<BoolProp> httpBoolProp;
 
-//    @XmlElementWrapper(name = "hashTree")
 //    @XmlAnyElement(lax = true)
-//    List<T> list;
-
+//    private List list;
 }

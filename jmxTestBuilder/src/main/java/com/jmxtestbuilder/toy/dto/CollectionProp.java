@@ -3,10 +3,7 @@ package com.jmxtestbuilder.toy.dto;
 
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Data
@@ -14,7 +11,10 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CollectionProp {
 
+    @XmlAttribute(name = "name")
+    private String name;
+
     @XmlElement(name = "elementProp")
-    List<ElementProp> elementProp;
+    List<ElementProp> elementPropList;
 
 }

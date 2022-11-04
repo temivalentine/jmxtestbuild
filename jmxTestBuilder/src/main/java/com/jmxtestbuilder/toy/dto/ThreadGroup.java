@@ -6,33 +6,28 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Data
-@XmlRootElement(name = "TestPlan")
+@XmlRootElement(name = "ThreadGroup")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TestPlan {
+public class ThreadGroup {
 
-    @XmlAttribute
+    @XmlAttribute(name = "guiclass")
     private String guiclass;
 
-    @XmlAttribute
+    @XmlAttribute(name = "testclass")
     private String testclass;
 
-    @XmlAttribute
+    @XmlAttribute(name = "testname")
     private String testname;
 
-    @XmlAttribute
+    @XmlAttribute(name = "enabled")
     private String enabled;
-
-    @XmlElement(name = "elementProp")
-    private List<ElementProp> elementPropList;
 
     @XmlElement(name = "stringProp")
     private List<StringProp> stringPropList;
 
+    @XmlElement(name = "elementProp")
+    private List<ElementProp> elementPropList;
+
     @XmlElement(name = "boolProp")
     private List<BoolProp> boolPropList;
-
-//    @XmlElementWrapper(name = "hashTree")
-//    @XmlAnyElement(lax = true)
-//    List<T> list;
-
 }

@@ -5,18 +5,18 @@ import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Data
 @XmlRootElement(name = "hashTree")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HashTree<T> {
+public class TestPlanHashTree {
 
-//    @XmlElement(name = "HTTPSamplerProxy")
-//    private List<HttpRequest> httpRequestList;
+    @XmlElement(name = "TestPlan")
+    private List<TestPlan> testPlanList;
 
-    @XmlAnyElement(lax = true)
-    List<T> list;
+    @XmlElement(name = "hashTree")
+    private List<ThreadGroupHashTree> threadGroupHashTreeList;
 }

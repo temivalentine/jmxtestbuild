@@ -6,17 +6,9 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Data
-@XmlRootElement(name = "JmeterTestPlan")
+@XmlRootElement(name = "jmeterTestPlan")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class JmeterTestPlan<T> {
-
-//    @XmlElementWrapper(name = "hashTree")
-//    @XmlElement(name = "TestPlan")
-//    private List<TestPlan> testPlan;
-
-//    @XmlElementWrapper(name = "hashTree")
-//    @XmlElement(name = "HeaderManager")
-//    private List<HeaderManager> headerManager;
+public class JmeterTestPlan {
 
     @XmlAttribute
     private String version;
@@ -27,8 +19,12 @@ public class JmeterTestPlan<T> {
     @XmlAttribute
     private String jmeter;
 
-    @XmlElementWrapper(name = "hashTree")
-    @XmlAnyElement(lax = true)
-    List<T> list;
+    @XmlElement(name = "hashTree")
+    private List<TestPlanHashTree> testPlanHashTreeList;
+
+
+//    @XmlElementWrapper(name = "hashTree")
+//    @XmlAnyElement(lax = true)
+//    List<T> list;
 
 }

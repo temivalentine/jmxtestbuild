@@ -2,16 +2,38 @@ package com.jmxtestbuilder.toy.dto;
 
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @Data
-@XmlRootElement(name = "elementProp")
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ElementProp {
 
+    @XmlAttribute(name = "name")
+    private String name;
+
+    @XmlAttribute(name = "elementType")
+    private String elementType;
+
+    @XmlAttribute(name = "guiclass")
+    private String guiclass;
+
+    @XmlAttribute(name = "testclass")
+    private String testclass;
+
+    @XmlAttribute(name = "enabled")
+    private String enabled;
+
+    @XmlAttribute(name = "testname")
+    private String testname;
+
+    @XmlElement(name = "boolProp")
+    private List<BoolProp> boolPropList;
+
     @XmlElement(name = "stringProp")
-    private String stringProp;
+    private List<StringProp> stringPropList;
+
+    @XmlElement(name = "collectionProp")
+    private List<CollectionProp> collectionPropList;
 }

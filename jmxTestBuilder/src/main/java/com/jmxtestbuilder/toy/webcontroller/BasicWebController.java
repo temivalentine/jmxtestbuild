@@ -1,6 +1,6 @@
 package com.jmxtestbuilder.toy.webcontroller;
 
-import com.jmxtestbuilder.toy.dto.ExcelData;
+import com.jmxtestbuilder.toy.dto.excel.ExcelData;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
