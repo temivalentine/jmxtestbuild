@@ -12,7 +12,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListTypeMarsharling {
+public class Marsharling {
     public static void main(String[] args) throws JAXBException {
         marshal();
     }
@@ -65,6 +65,9 @@ public class ListTypeMarsharling {
         elementProp2.setGuiclass("HTTPArgumentsPanel");
         elementProp2.setTestclass("Arguments");
         elementProp2.setEnabled("true");
+
+        //Custom Method() 1
+//        collectionElementProp(stringPropList, boolPropList, elementPropList);
 
         List<CollectionProp> collectionPropList = new ArrayList<>();
         collectionPropList.add(collectionProp);
@@ -398,11 +401,12 @@ public class ListTypeMarsharling {
     }
 
     //HTTP Request method()
-    public HTTPSamplerProxy addHttpSampleProxy(@RequestParam("URL") String url, List<ElementProp> elementPropList,
-                                               List<StringProp> stringPropList, List<BoolProp> boolPropList) {
+    public static void collectionElementProp(@RequestParam("URL") String url, List<ElementProp> elementPropList,
+                                             List<StringProp> stringPropList, List<BoolProp> boolPropList) {
         HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
+        ElementProp elementProp = new ElementProp();
+        StringProp stringProp = new StringProp();
+        BoolProp boolProp = new BoolProp();
 
-        
-        return httpSamplerProxy;
     }
 }
