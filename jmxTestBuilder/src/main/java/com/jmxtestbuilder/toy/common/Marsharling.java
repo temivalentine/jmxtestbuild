@@ -1,9 +1,8 @@
-package com.jmxtestbuilder.toy.webcontroller;
+package com.jmxtestbuilder.toy.common;
 
 
 import com.jmxtestbuilder.toy.dto.ThreadGroup;
 import com.jmxtestbuilder.toy.dto.*;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -14,7 +13,7 @@ import java.util.List;
 
 public class Marsharling {
     public static void main(String[] args) throws JAXBException {
-        marshal();
+//        marshal(CollectionProp cp);
     }
 
     public static void marshal() {
@@ -378,7 +377,6 @@ public class Marsharling {
         jmeterTestPlan.setJmeter("5.5");
 
         // JmerTestPlan HashTree
-
         List<TestPlanHashTree> testPlanHashTreeList = new ArrayList<>();
         testPlanHashTreeList.add(testPlanHashTree);
         jmeterTestPlan.setTestPlanHashTreeList(testPlanHashTreeList);
@@ -398,15 +396,5 @@ public class Marsharling {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-    }
-
-    //HTTP Request method()
-    public static void collectionElementProp(@RequestParam("URL") String url, List<ElementProp> elementPropList,
-                                             List<StringProp> stringPropList, List<BoolProp> boolPropList) {
-        HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
-        ElementProp elementProp = new ElementProp();
-        StringProp stringProp = new StringProp();
-        BoolProp boolProp = new BoolProp();
-
     }
 }
