@@ -77,8 +77,6 @@ public class BasicWebController {
                 String keys = it.next();
                 queryParams.get(keys);
                 String values = queryParams.get(keys).get(0);
-
-                CustomMethod.collectionElementProp(keys, values);
             }
             dataList.add(data);
         }
