@@ -1,4 +1,4 @@
-package com.jmxtestbuilder.toy.utils;
+package com.jmxtestbuilder.toy.dataType;
 
 /**
  * packageName    : com.jmxtestbuilder.toy.utils

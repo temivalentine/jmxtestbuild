@@ -22,43 +22,5 @@ public class BasicRestController {
         return "test";
     }
 
-    @PostMapping("/excel/read")
-    public void excel2Json(@RequestParam("file") MultipartFile file) {
-        try {
-            XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 
-            XSSFSheet worksheet = workbook.getSheetAt(0);
-
-            List<JSONObject> dataList = new ArrayList<>();
-
-            Row header = worksheet.getRow(1);
-
-            for (int i = 2; i < worksheet.getPhysicalNumberOfRows(); i++) {
-                Row row = worksheet.getRow(i);
-                JSONObject rowJsonObject = new JSONObject();
-                for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
-                    String columnName = header.getCell(j).toString();
-                    String columnValue = row.getCell(j).toString();
-                    rowJsonObject.put(columnName, columnValue);
-//                    System.out.println(rowJsonObject);
-                }
-                dataList.add(rowJsonObject);
-            }
-            writeData2JsonFile(dataList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void writeData2JsonFile(List<JSONObject> dataList) {
-        Gson gson = new Gson();
-        try {
-            FileWriter file = new FileWriter("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/data.json");
-            file.write(gson.toJson(dataList));
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
