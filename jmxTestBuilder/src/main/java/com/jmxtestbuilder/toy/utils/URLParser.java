@@ -1,6 +1,6 @@
 package com.jmxtestbuilder.toy.utils;
 
-import com.jmxtestbuilder.toy.dto.excel.ExcelData;
+import com.jmxtestbuilder.toy.dto.data.ExcelParam;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -11,10 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -35,7 +32,7 @@ public class URLParser {
 
     public static void readExcel() throws IOException {
         FileInputStream file = new FileInputStream("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/test.xlsx");
-        List<ExcelData> dataList = new ArrayList<>();
+        List<ExcelParam> dataList = new ArrayList<>();
 
         Workbook workbook = null;
         workbook = new XSSFWorkbook(file);
@@ -43,7 +40,7 @@ public class URLParser {
 
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
             Row row = worksheet.getRow(i);
-            ExcelData data = new ExcelData();
+            ExcelParam data = new ExcelParam();
 
             data.setDevice(row.getCell(0).getStringCellValue());
             data.setModule(row.getCell(1).getStringCellValue());
@@ -58,13 +55,18 @@ public class URLParser {
             UriComponents uriComponents = UriComponentsBuilder.fromUriString(data.getUrl()).build();
             MultiValueMap<String, String> queryParams = uriComponents.getQueryParams();
             // keys
+            HashMap<String, String> hashMap = new HashMap<>();
             Set<String> keySet = queryParams.keySet();
             Iterator<String> it = keySet.iterator();
             while (it.hasNext()) {
                 String keys = it.next();
                 String values = queryParams.get(keys).get(0);
 //                System.out.println("keys ======= : " + keys + "values ============ : " + values);
+                hashMap.put(keys, values);
             }
+            hashMap.forEach((key, value) -> {
+                System.out.println(key + ":" + value);
+            });
             dataList.add(data);
         }
     }

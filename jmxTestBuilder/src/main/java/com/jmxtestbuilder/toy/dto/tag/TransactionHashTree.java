@@ -1,5 +1,4 @@
-package com.jmxtestbuilder.toy.dto;
-
+package com.jmxtestbuilder.toy.dto.tag;
 
 import lombok.Data;
 
@@ -12,11 +11,11 @@ import java.util.List;
 @Data
 @XmlRootElement(name = "hashTree")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HTTPHashTree {
+public class TransactionHashTree {
 
-    @XmlElement(name = "HTTPSamplerProxy")
-    private List<HTTPSamplerProxy> httpSamplerProxyList;
+    @XmlElement(name = "TransactionController")
+    private List<TransactionController> transactionControllerList;
 
-//    @XmlAnyElement(lax = true)
-//    List<T> list;
+    @XmlElement(name = "hashTree")
+    private List<HTTPHashTree> httpHashTreeList;
 }

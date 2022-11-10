@@ -1,4 +1,4 @@
-package com.jmxtestbuilder.toy.dataType;
+package com.jmxtestbuilder.toy.type;
 
 public enum StringPropType {
     VALUE("Argument.value"), NAME("Argument.name"), METADATA("Argument.metadata");

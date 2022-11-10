@@ -1,4 +1,4 @@
-package com.jmxtestbuilder.toy.dto;
+package com.jmxtestbuilder.toy.dto.tag;
 
 import lombok.Data;
 

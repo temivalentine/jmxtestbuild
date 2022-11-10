@@ -1,37 +1,38 @@
-package com.jmxtestbuilder.toy.dto;
+package com.jmxtestbuilder.toy.dto.tag;
 
 import lombok.Data;
 
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
-
 @Data
-@XmlRootElement(name = "HTTPSamplerProxy")
+@XmlRootElement(name = "TestPlan")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HTTPSamplerProxy {
+public class TestPlan {
 
-    @XmlAttribute(name = "guiclass")
+    @XmlAttribute
     private String guiclass;
 
-    @XmlAttribute(name = "testclass")
+    @XmlAttribute
     private String testclass;
 
-    @XmlAttribute(name = "testname")
+    @XmlAttribute
     private String testname;
 
-    @XmlAttribute(name = "enabled")
+    @XmlAttribute
     private String enabled;
 
     @XmlElement(name = "elementProp")
     private List<ElementProp> elementPropList;
 
     @XmlElement(name = "stringProp")
-    private List<StringProp> httpStringProp;
+    private List<StringProp> stringPropList;
 
     @XmlElement(name = "boolProp")
-    private List<BoolProp> httpBoolProp;
+    private List<BoolProp> boolPropList;
 
+//    @XmlElementWrapper(name = "hashTree")
 //    @XmlAnyElement(lax = true)
-//    private List list;
+//    List<T> list;
+
 }

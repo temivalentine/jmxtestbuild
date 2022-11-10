@@ -1,8 +1,8 @@
 package com.jmxtestbuilder.toy.common;
 
 
-import com.jmxtestbuilder.toy.dto.ThreadGroup;
-import com.jmxtestbuilder.toy.dto.*;
+import com.jmxtestbuilder.toy.dto.tag.*;
+import com.jmxtestbuilder.toy.dto.tag.ThreadGroup;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

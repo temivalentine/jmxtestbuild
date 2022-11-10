@@ -1,4 +1,4 @@
-package com.jmxtestbuilder.toy.dataType;
+package com.jmxtestbuilder.toy.type;
 
 public enum BoolPropType {
     ENCODE("HTTPArgument.always_encode"), EQUALS("HTTPArgument.use_equals");

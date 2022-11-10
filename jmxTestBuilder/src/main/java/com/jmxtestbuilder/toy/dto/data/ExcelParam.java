@@ -1,14 +1,19 @@
-package com.jmxtestbuilder.toy.dto.excel;
+package com.jmxtestbuilder.toy.dto.data;
 
 import lombok.Data;
 
 @Data
-public class ExcelData {
+public class ExcelParam {
 
     private String device;
+
     private String module;
+
     private String update;
+
     private String url;
+
     private String description;
+
     private String etc;
 }
