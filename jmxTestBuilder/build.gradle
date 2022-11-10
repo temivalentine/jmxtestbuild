@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.jmxtestbuilder'
+group = 'com.jmxbuilder'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
 
