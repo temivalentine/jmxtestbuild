@@ -30,9 +30,9 @@ public class URLParser {
         readExcel();
     }
 
-    public static void readExcel() throws IOException {
+    public static List<HashMap<String, String>> readExcel() throws IOException {
         FileInputStream file = new FileInputStream("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/test.xlsx");
-        List<ExcelParam> dataList = new ArrayList<>();
+        List<HashMap<String, String>> hashMapList = new ArrayList<>();
 
         Workbook workbook = null;
         workbook = new XSSFWorkbook(file);
@@ -55,19 +55,20 @@ public class URLParser {
             UriComponents uriComponents = UriComponentsBuilder.fromUriString(data.getUrl()).build();
             MultiValueMap<String, String> queryParams = uriComponents.getQueryParams();
             // keys
-            HashMap<String, String> hashMap = new HashMap<>();
             Set<String> keySet = queryParams.keySet();
             Iterator<String> it = keySet.iterator();
+            HashMap<String, String> hashMap = new HashMap<>();
             while (it.hasNext()) {
                 String keys = it.next();
                 String values = queryParams.get(keys).get(0);
 //                System.out.println("keys ======= : " + keys + "values ============ : " + values);
                 hashMap.put(keys, values);
             }
-            hashMap.forEach((key, value) -> {
-                System.out.println(key + ":" + value);
-            });
-            dataList.add(data);
+//            hashMap.forEach((key, value) -> {
+//                System.out.println(key + ":" + value);
+//            });
+            hashMapList.add(hashMap);
         }
+        return hashMapList;
     }
 }

@@ -3,14 +3,18 @@ package com.jmxbuilder.jmx.common;
 import com.jmxbuilder.jmx.type.BoolPropType;
 import com.jmxbuilder.jmx.type.StringPropType;
 import com.jmxbuilder.jmx.dto.tag.*;
+import com.jmxbuilder.jmx.utils.URLParser;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * packageName    : com.jmxtestbuilder.toy.common
@@ -24,8 +28,27 @@ import java.util.List;
  * 22. 11. 10.        im-happy-coder       최초 생성
  */
 public class ExcelParsing {
+    public static void main(String[] args) throws IOException {
+        parsing();
+    }
+
     //parsing Method() 1
-    public static void parsing() {
+    public static void parsing() throws IOException {
+
+        HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
+
+        List<HashMap<String, String>> testmaplist = URLParser.readExcel();
+
+        for (HashMap<String, String> hmap : testmaplist) {
+            for (Map.Entry<String, String> entry : hmap.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                hmap.put(key, value);
+            }
+            httpSamplerProxy(hmap);
+        }
+
+
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(HTTPSamplerProxy.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
@@ -33,7 +56,7 @@ public class ExcelParsing {
             marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 
             StringWriter sw = new StringWriter();
-            marshaller.marshal(elementProp, sw);
+            marshaller.marshal(httpSamplerProxy, sw);
             System.out.println(sw);
 
         } catch (JAXBException e) {
@@ -45,7 +68,7 @@ public class ExcelParsing {
             Parsing Data Method
      */
     // HTTPSampleProxy
-    public static HTTPSamplerProxy httpSamplerProxy(HashMap<Enum, String> hpmap) {
+    public static HTTPSamplerProxy httpSamplerProxy(HashMap<String, String> hpmap) {
         HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
         List<ElementProp> elementPropList = new ArrayList<>();
         elementPropList.add(elementPropHSP(hpmap));
