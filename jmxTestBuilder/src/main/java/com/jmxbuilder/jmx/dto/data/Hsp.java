@@ -1,5 +1,6 @@
 package com.jmxbuilder.jmx.dto.data;
 
+import com.jmxbuilder.jmx.type.StringPropType;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 
 @Data
-public class HSP {
+public class Hsp {
 
     //StringProp
     private String name;
@@ -54,6 +55,6 @@ public class HSP {
 
     private String browserCompatibleMultipart;
 
-    //HashMap
-    List<HashMap<String, String>> elmapList;
+    List<Params> paramsList;
+
 }

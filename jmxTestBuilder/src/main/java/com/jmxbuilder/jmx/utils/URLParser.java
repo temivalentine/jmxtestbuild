@@ -1,6 +1,7 @@
 package com.jmxbuilder.jmx.utils;
 
 import com.jmxbuilder.jmx.dto.data.ExcelParam;
+import com.jmxbuilder.jmx.dto.data.Params;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -26,13 +27,11 @@ import java.util.*;
  * 22. 11. 10.        im-happy-coder       최초 생성
  */
 public class URLParser {
-    public static void main(String[] args) throws IOException {
-        readExcel();
-    }
 
-    public static List<HashMap<String, String>> readExcel() throws IOException {
+    public static List<Params> readExcel() throws IOException {
         FileInputStream file = new FileInputStream("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/test.xlsx");
-        List<HashMap<String, String>> hashMapList = new ArrayList<>();
+
+        List<Params> paramsList = new ArrayList<>();
 
         Workbook workbook = null;
         workbook = new XSSFWorkbook(file);
@@ -57,18 +56,24 @@ public class URLParser {
             // keys
             Set<String> keySet = queryParams.keySet();
             Iterator<String> it = keySet.iterator();
-            HashMap<String, String> hashMap = new HashMap<>();
+
+            Params params = new Params();
+
             while (it.hasNext()) {
-                String keys = it.next();
-                String values = queryParams.get(keys).get(0);
+                String key = it.next();
+                String value = queryParams.get(key).get(0);
+                params.setName(key);
+                params.setValue(value);
 //                System.out.println("keys ======= : " + keys + "values ============ : " + values);
-                hashMap.put(keys, values);
             }
+            params.setEncode("true");
+            params.setEquals("true");
+            params.setMemtaData("");
 //            hashMap.forEach((key, value) -> {
 //                System.out.println(key + ":" + value);
 //            });
-            hashMapList.add(hashMap);
+            paramsList.add(params);
         }
-        return hashMapList;
+        return paramsList;
     }
 }

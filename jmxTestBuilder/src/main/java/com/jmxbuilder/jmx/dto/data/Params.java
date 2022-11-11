@@ -1,0 +1,25 @@
+package com.jmxbuilder.jmx.dto.data;
+
+import lombok.Data;
+
+/**
+ * packageName    : com.jmxbuilder.jmx.dto.data
+ * fileName       : Params
+ * author         : im-happy-coder
+ * date           : 22. 11. 11.
+ * description    :
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 22. 11. 11.        im-happy-coder       최초 생성
+ */
+@Data
+public class Params {
+    private String name;
+    private String value;
+    private String contentType;
+    private String memtaData;
+    private String encode;
+    private String equals;
+
+}

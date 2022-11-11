@@ -1,8 +1,11 @@
 package com.jmxbuilder.jmx.common;
 
-import com.jmxbuilder.jmx.type.BoolPropType;
-import com.jmxbuilder.jmx.type.StringPropType;
+import com.jmxbuilder.jmx.dto.data.Hsp;
 import com.jmxbuilder.jmx.dto.tag.*;
+import com.jmxbuilder.jmx.type.BoolPropType;
+import com.jmxbuilder.jmx.type.HspBoolPropType;
+import com.jmxbuilder.jmx.type.HspStringPropType;
+import com.jmxbuilder.jmx.type.StringPropType;
 import com.jmxbuilder.jmx.utils.URLParser;
 
 import javax.xml.bind.JAXBContext;
@@ -10,11 +13,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * packageName    : com.jmxtestbuilder.toy.common
@@ -35,32 +36,36 @@ public class ExcelParsing {
     //parsing Method() 1
     public static void parsing() throws IOException {
 
-        HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
+        Hsp hsp = new Hsp();
+        // Excel Data List 가져오기
+        hsp.setParamsList(URLParser.readExcel());
 
-        List<HashMap<String, String>> testmaplist = URLParser.readExcel();
+        HashMap<Enum, String> hmap = new HashMap<>();
 
-        for (HashMap<String, String> hmap : testmaplist) {
-            for (Map.Entry<String, String> entry : hmap.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                hmap.put(key, value);
+        for (int i = 0; i < hsp.getParamsList().size(); i++) {
+            // hspStrProp Data
+            hmap.put(StringPropType.NAME, hsp.getParamsList().get(i).getName());
+            hmap.put(StringPropType.VALUE, hsp.getParamsList().get(i).getValue());
+            hmap.put(StringPropType.METADATA, hsp.getParamsList().get(i).getMemtaData());
+            // hspBoolProp Data
+            hmap.put(BoolPropType.ENCODE, hsp.getParamsList().get(i).getEncode());
+            hmap.put(BoolPropType.EQUALS, hsp.getParamsList().get(i).getEquals());
+
+
+            try {
+                JAXBContext jaxbContext = JAXBContext.newInstance(HTTPSamplerProxy.class);
+                Marshaller marshaller = jaxbContext.createMarshaller();
+                marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
+                marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+                StringWriter sw = new StringWriter();
+                marshaller.marshal(ExcelParsing.httpSamplerProxy(hmap), sw);
+                System.out.println(sw);
+
+            } catch (JAXBException e) {
+                e.printStackTrace();
             }
-            httpSamplerProxy(hmap);
-        }
-
-
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(HTTPSamplerProxy.class);
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-
-            StringWriter sw = new StringWriter();
-            marshaller.marshal(httpSamplerProxy, sw);
-            System.out.println(sw);
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
+            System.out.println("==========================================================");
         }
     }
 
@@ -68,14 +73,58 @@ public class ExcelParsing {
             Parsing Data Method
      */
     // HTTPSampleProxy
-    public static HTTPSamplerProxy httpSamplerProxy(HashMap<String, String> hpmap) {
+    public static HTTPSamplerProxy httpSamplerProxy(HashMap<Enum, String> hpmap) {
         HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
         List<ElementProp> elementPropList = new ArrayList<>();
-        elementPropList.add(elementPropHSP(hpmap));
+        List<StringProp> stringPropList = new ArrayList<>();
+        List<BoolProp> boolPropList = new ArrayList<>();
 
+        elementPropList.add(elementPropHSP(hpmap));
         httpSamplerProxy.setElementPropList(elementPropList);
 
+        //HttpSampleProxy stringProp Data insert
+        stringPropList.add(stringproplist(HspStringPropType.DOMAIN, hpmap.get(HspStringPropType.DOMAIN)));
+        stringPropList.add(stringproplist(HspStringPropType.PORT, hpmap.get(HspStringPropType.PORT)));
+        stringPropList.add(stringproplist(HspStringPropType.PROTOCOL, hpmap.get(HspStringPropType.PROTOCOL)));
+        stringPropList.add(stringproplist(HspStringPropType.CONTENTENCODING, hpmap.get(HspStringPropType.CONTENTENCODING)));
+        stringPropList.add(stringproplist(HspStringPropType.PATH, hpmap.get(HspStringPropType.PATH)));
+        stringPropList.add(stringproplist(HspStringPropType.METHOD, hpmap.get(HspStringPropType.METHOD)));
+        stringPropList.add(stringproplist(HspStringPropType.URL, hpmap.get(HspStringPropType.URL)));
+        stringPropList.add(stringproplist(HspStringPropType.CONNECTION_TIMEOUT, hpmap.get(HspStringPropType.CONNECTION_TIMEOUT)));
+        stringPropList.add(stringproplist(HspStringPropType.RESPONSE_TIMEOUT, hpmap.get(HspStringPropType.RESPONSE_TIMEOUT)));
+        stringPropList.add(stringproplist(HspStringPropType.COMMENTS, hpmap.get(HspStringPropType.COMMENTS)));
+
+        httpSamplerProxy.setHttpStringProp(stringPropList);
+
+
+        //HttpSampleProxy boolProp Data insert
+        boolPropList.add(boolproplist(HspBoolPropType.FOLLOW_REDIRECTS, hpmap.get(HspBoolPropType.FOLLOW_REDIRECTS)));
+        boolPropList.add(boolproplist(HspBoolPropType.AUTO_REDIRECTS, hpmap.get(HspBoolPropType.AUTO_REDIRECTS)));
+        boolPropList.add(boolproplist(HspBoolPropType.USE_KEEPALIVE, hpmap.get(HspBoolPropType.USE_KEEPALIVE)));
+        boolPropList.add(boolproplist(HspBoolPropType.MULTIPART_POST, hpmap.get(HspBoolPropType.MULTIPART_POST)));
+        boolPropList.add(boolproplist(HspBoolPropType.BROWSER_COMPATIBLE, hpmap.get(HspBoolPropType.BROWSER_COMPATIBLE)));
+
+        httpSamplerProxy.setHttpBoolProp(boolPropList);
+
         return httpSamplerProxy;
+    }
+
+    // <HTTPSampleProxy> <stringProp> method
+    public static StringProp stringproplist(HspStringPropType hsp, String value) {
+        StringProp stringProp = new StringProp();
+        stringProp.setName(hsp.getName());
+        stringProp.setValue(value);
+
+        return stringProp;
+    }
+
+    // <HTTPSampleProxy> <boolProp> method
+    public static BoolProp boolproplist(HspBoolPropType hbp, String value) {
+        BoolProp boolProp = new BoolProp();
+        boolProp.setName(hbp.getName());
+        boolProp.setValue(value);
+
+        return boolProp;
     }
 
     // <HTTPSampleProxy>    ElementProp  상위
