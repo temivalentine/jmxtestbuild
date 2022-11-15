@@ -69,15 +69,18 @@ public class JmxMarsharling {
             hmap.put(HspBoolPropType.MULTIPART_POST, "false");
             hmap.put(HspBoolPropType.BROWSER_COMPATIBLE, "false");
 
-
             try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(HTTPHashTree.class);
+                JAXBContext jaxbContext = JAXBContext.newInstance(HTTPSamplerProxy.class);
                 Marshaller marshaller = jaxbContext.createMarshaller();
                 marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
                 marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 
                 StringWriter sw = new StringWriter();
-                marshaller.marshal(JmxMarsharling.httpHashTree(hmap), sw);
+                String hashTree = "\n<hashTree/>";
+                marshaller.marshal(JmxMarsharling.httpSamplerProxy(hmap), sw);
+                sw.append(hashTree);
+
+//                httpHashTreeTest(hmap, sw);
                 System.out.println(sw);
 
             } catch (JAXBException e) {
@@ -87,26 +90,46 @@ public class JmxMarsharling {
 //            System.out.println("==========================================================");
 //            System.out.println("count ================ : " + count);
         }
+//        hashTreeTest();
     }
 
 
-    // HTTPHashTree   | <hashTree/>  만들기
+//    public static void httpHashTreeTest(HashMap<Enum, String> hmap, StringWriter sw) {
+//        HTTPHashTree httpHashTree = new HTTPHashTree();
+//        List<HTTPSamplerProxy> httpSamplerProxyList = new ArrayList<>();
+//
+//        // HTTPSampleProxy 전체 HashTree
+//        httpSamplerProxyList.add(httpSamplerProxy(hmap));
+//        httpHashTree.setHttpSamplerProxyList(httpSamplerProxyList);
+//
+//        try {
+//            JAXBContext jaxbContext = JAXBContext.newInstance(HTTPHashTree.class);
+//            Marshaller marshaller = jaxbContext.createMarshaller();
+//            marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
+//            marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+//
+//            StringWriter htsw = new StringWriter();
+//            sw.append(htsw);
+//            htsw.append(sw);
+//            marshaller.marshal(httpHashTree, htsw);
+//
+//        } catch (JAXBException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    // HTTPHashTree
     public static HTTPHashTree httpHashTree(HashMap<Enum, String> hmap) {
         HTTPHashTree httpHashTree = new HTTPHashTree();
         List<HTTPSamplerProxy> httpSamplerProxyList = new ArrayList<>();
 
-        //<hashTree/>  만들기  용
-        List<HashTree> hashTreeList = new ArrayList<>();
-        HashTree hashTree = new HashTree();
-        hashTreeList.add(hashTree);
-        httpHashTree.setHashTreeList(hashTreeList);
-
         // HTTPSampleProxy 전체 HashTree
         httpSamplerProxyList.add(httpSamplerProxy(hmap));
         httpHashTree.setHttpSamplerProxyList(httpSamplerProxyList);
+
         return httpHashTree;
     }
-
 
     // HTTPSampleProxy
     public static HTTPSamplerProxy httpSamplerProxy(HashMap<Enum, String> hpmap) {

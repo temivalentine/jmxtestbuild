@@ -14,8 +14,8 @@ public class HTTPHashTree {
     @XmlElement(name = "HTTPSamplerProxy")
     private List<HTTPSamplerProxy> httpSamplerProxyList;
 
-    @XmlElement(name = "hashTree")
-    private List<HashTree> hashTreeList;
+//    @XmlElement(name = "hashTree")
+//    private List<HashTree> hashTreeList;
 
 //    @XmlAnyElement(lax = true)
 //    List<T> list;
