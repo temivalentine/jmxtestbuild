@@ -1,9 +1,7 @@
 package com.jmxbuilder.jmx.dto.data;
 
-import com.jmxbuilder.jmx.type.StringPropType;
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,27 +20,26 @@ import java.util.List;
 public class Hsp {
 
     //StringProp
-    private String name;
-
-    private String comments;
-
-    private String protocol;
-
-    private String ip;
+    private String domain;
 
     private String port;
 
-    private String method;
+    private String protocol;
+
+    private String contentEncoding;
 
     private String path;
 
-    private String contentEncoding;
+    private String method;
 
     private String embeddedUrlRe;
 
     private String connectTimeout;
 
     private String responseTimeout;
+
+    private String comments;
+
 
     //BoolProp
     private String followRedirects;

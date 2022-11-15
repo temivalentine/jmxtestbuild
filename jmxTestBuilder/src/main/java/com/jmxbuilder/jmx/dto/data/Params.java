@@ -2,6 +2,8 @@ package com.jmxbuilder.jmx.dto.data;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * packageName    : com.jmxbuilder.jmx.dto.data
  * fileName       : Params
@@ -22,4 +24,5 @@ public class Params {
     private String encode;
     private String equals;
 
+    List<Hsp> hspList;
 }

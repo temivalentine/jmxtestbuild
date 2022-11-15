@@ -35,6 +35,7 @@ public class ExcelParsing {
 
     //parsing Method() 1
     public static void parsing() throws IOException {
+        int count = 0;
 
         Hsp hsp = new Hsp();
         // Excel Data List 가져오기
@@ -42,18 +43,34 @@ public class ExcelParsing {
 
         HashMap<Enum, String> hmap = new HashMap<>();
 
-        for (int i = 0; i < hsp.getParamsList().size(); i++) {
-            // hspStrProp Data
+        for (int i = 1; i < hsp.getParamsList().size(); i++) {
+            // StrProp Data
             hmap.put(StringPropType.NAME, hsp.getParamsList().get(i).getName());
             hmap.put(StringPropType.VALUE, hsp.getParamsList().get(i).getValue());
             hmap.put(StringPropType.METADATA, hsp.getParamsList().get(i).getMemtaData());
-            // hspBoolProp Data
+            // BoolProp Data
             hmap.put(BoolPropType.ENCODE, hsp.getParamsList().get(i).getEncode());
             hmap.put(BoolPropType.EQUALS, hsp.getParamsList().get(i).getEquals());
+            // HspStrProp Data
+            hmap.put(HspStringPropType.DOMAIN, hsp.getParamsList().get(i).getHspList().get(i).getDomain());
+            hmap.put(HspStringPropType.PATH, hsp.getParamsList().get(i).getHspList().get(i).getPath());
+            hmap.put(HspStringPropType.PORT, "");
+            hmap.put(HspStringPropType.PROTOCOL, "");
+            hmap.put(HspStringPropType.CONTENTENCODING, "");
+            hmap.put(HspStringPropType.EMBEDDED_URL_RE, "");
+            hmap.put(HspStringPropType.CONNECTION_TIMEOUT, "");
+            hmap.put(HspStringPropType.RESPONSE_TIMEOUT, "");
+            hmap.put(HspStringPropType.COMMENTS, "");
+            // HspBoolProp Data
+            hmap.put(HspBoolPropType.FOLLOW_REDIRECTS, "true");
+            hmap.put(HspBoolPropType.AUTO_REDIRECTS, "false");
+            hmap.put(HspBoolPropType.USE_KEEPALIVE, "true");
+            hmap.put(HspBoolPropType.MULTIPART_POST, "false");
+            hmap.put(HspBoolPropType.BROWSER_COMPATIBLE, "false");
 
 
             try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(HTTPSamplerProxy.class);
+                JAXBContext jaxbContext = JAXBContext.newInstance(HTTPHashTree.class);
                 Marshaller marshaller = jaxbContext.createMarshaller();
                 marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
                 marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
@@ -65,7 +82,9 @@ public class ExcelParsing {
             } catch (JAXBException e) {
                 e.printStackTrace();
             }
-            System.out.println("==========================================================");
+//            count++;
+//            System.out.println("==========================================================");
+//            System.out.println("count ================ : " + count);
         }
     }
 
@@ -78,8 +97,15 @@ public class ExcelParsing {
         List<ElementProp> elementPropList = new ArrayList<>();
         List<StringProp> stringPropList = new ArrayList<>();
         List<BoolProp> boolPropList = new ArrayList<>();
+        List<HTTPSamplerProxy> httpSamplerProxyList = new ArrayList<>();
+        List<HTTPHashTree> httpHashTreeList = new ArrayList<>();
 
         elementPropList.add(elementPropHSP(hpmap));
+
+        httpSamplerProxy.setGuiclass("HttpTestSampleGui");
+        httpSamplerProxy.setTestclass("HTTPSamplerProxy");
+        httpSamplerProxy.setTestname("HTTP Request");
+        httpSamplerProxy.setEnabled("true");
         httpSamplerProxy.setElementPropList(elementPropList);
 
         //HttpSampleProxy stringProp Data insert
@@ -89,13 +115,12 @@ public class ExcelParsing {
         stringPropList.add(stringproplist(HspStringPropType.CONTENTENCODING, hpmap.get(HspStringPropType.CONTENTENCODING)));
         stringPropList.add(stringproplist(HspStringPropType.PATH, hpmap.get(HspStringPropType.PATH)));
         stringPropList.add(stringproplist(HspStringPropType.METHOD, hpmap.get(HspStringPropType.METHOD)));
-        stringPropList.add(stringproplist(HspStringPropType.URL, hpmap.get(HspStringPropType.URL)));
+        stringPropList.add(stringproplist(HspStringPropType.EMBEDDED_URL_RE, hpmap.get(HspStringPropType.EMBEDDED_URL_RE)));
         stringPropList.add(stringproplist(HspStringPropType.CONNECTION_TIMEOUT, hpmap.get(HspStringPropType.CONNECTION_TIMEOUT)));
         stringPropList.add(stringproplist(HspStringPropType.RESPONSE_TIMEOUT, hpmap.get(HspStringPropType.RESPONSE_TIMEOUT)));
         stringPropList.add(stringproplist(HspStringPropType.COMMENTS, hpmap.get(HspStringPropType.COMMENTS)));
 
         httpSamplerProxy.setHttpStringProp(stringPropList);
-
 
         //HttpSampleProxy boolProp Data insert
         boolPropList.add(boolproplist(HspBoolPropType.FOLLOW_REDIRECTS, hpmap.get(HspBoolPropType.FOLLOW_REDIRECTS)));
@@ -115,6 +140,7 @@ public class ExcelParsing {
         stringProp.setName(hsp.getName());
         stringProp.setValue(value);
 
+
         return stringProp;
     }
 
@@ -132,6 +158,12 @@ public class ExcelParsing {
         ElementProp elementProp = new ElementProp();
         List<CollectionProp> collectionPropList = new ArrayList<>();
         collectionPropList.add(cp(hpmap));
+
+        elementProp.setName("HTTPsampler.Arguments");
+        elementProp.setElementType("Arguments");
+        elementProp.setGuiclass("HTTPArgumentsPanel");
+        elementProp.setTestclass("Arguments");
+        elementProp.setEnabled("true");
         elementProp.setCollectionPropList(collectionPropList);
 
         return elementProp;
@@ -142,7 +174,10 @@ public class ExcelParsing {
         CollectionProp collectionProp = new CollectionProp();
         List<ElementProp> elementPropList = new ArrayList<>();
         elementPropList.add(ep(hpmap));
+
+        collectionProp.setName("Arguments.arguments");
         collectionProp.setElementPropList(elementPropList);
+
 
         return collectionProp;
     }
@@ -160,10 +195,17 @@ public class ExcelParsing {
         stringPropList.add(sp(StringPropType.METADATA, hpmap.get(StringPropType.METADATA)));
         stringPropList.add(sp(StringPropType.NAME, hpmap.get(StringPropType.NAME)));
 
-        elementProp.setBoolPropList(boolPropList);
-        elementProp.setStringPropList(stringPropList);
+        elementProp.setName("id");
+        elementProp.setElementType("HTTPArgument");
 
-        return elementProp;
+        if (hpmap.get(StringPropType.VALUE) == null) {
+            return null;
+        } else {
+            elementProp.setBoolPropList(boolPropList);
+            elementProp.setStringPropList(stringPropList);
+            return elementProp;
+        }
+
     }
 
     //  <collection> <elementProp>    BoolProp

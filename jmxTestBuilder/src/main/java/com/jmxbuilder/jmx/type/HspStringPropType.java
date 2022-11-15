@@ -13,7 +13,7 @@ package com.jmxbuilder.jmx.type;
  */
 public enum HspStringPropType {
     DOMAIN("HTTPSampler.domain"), PORT("HTTPSampler.port"), PROTOCOL("HTTPSampler.protocol"), CONTENTENCODING("HTTPSampler.contentEncoding"),
-    PATH("HTTPSampler.path"), METHOD("HTTPSampler.method"), URL("HTTPSampler.embedded_url_re"), CONNECTION_TIMEOUT("HTTPSampler.connect_timeout"),
+    PATH("HTTPSampler.path"), METHOD("HTTPSampler.method"), EMBEDDED_URL_RE("HTTPSampler.embedded_url_re"), CONNECTION_TIMEOUT("HTTPSampler.connect_timeout"),
     RESPONSE_TIMEOUT("HTTPSampler.response_timeout"), COMMENTS("TestPlan.comments");
 
     private String name;

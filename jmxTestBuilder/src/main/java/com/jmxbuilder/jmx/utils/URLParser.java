@@ -1,6 +1,7 @@
 package com.jmxbuilder.jmx.utils;
 
 import com.jmxbuilder.jmx.dto.data.ExcelParam;
+import com.jmxbuilder.jmx.dto.data.Hsp;
 import com.jmxbuilder.jmx.dto.data.Params;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -29,9 +30,10 @@ import java.util.*;
 public class URLParser {
 
     public static List<Params> readExcel() throws IOException {
-        FileInputStream file = new FileInputStream("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/test.xlsx");
+        FileInputStream file = new FileInputStream("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/pathTest.xlsx");
 
         List<Params> paramsList = new ArrayList<>();
+        List<Hsp> hspList = new ArrayList<>();
 
         Workbook workbook = null;
         workbook = new XSSFWorkbook(file);
@@ -58,6 +60,7 @@ public class URLParser {
             Iterator<String> it = keySet.iterator();
 
             Params params = new Params();
+            Hsp hsp = new Hsp();
 
             while (it.hasNext()) {
                 String key = it.next();
@@ -69,9 +72,14 @@ public class URLParser {
             params.setEncode("true");
             params.setEquals("true");
             params.setMemtaData("");
-//            hashMap.forEach((key, value) -> {
-//                System.out.println(key + ":" + value);
-//            });
+
+
+            hsp.setDomain(uriComponents.getHost());
+            hsp.setPath(uriComponents.getPath());
+            hspList.add(hsp);
+
+            params.setHspList(hspList);
+
             paramsList.add(params);
         }
         return paramsList;
