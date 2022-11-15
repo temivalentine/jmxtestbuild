@@ -27,7 +27,7 @@ import java.util.*;
  * -----------------------------------------------------------
  * 22. 11. 10.        im-happy-coder       최초 생성
  */
-public class URLParser {
+public class ExcelParsing {
 
     public static List<Params> readExcel() throws IOException {
         FileInputStream file = new FileInputStream("/root/IdeaProjects/jmxtestbuild/jmxTestBuilder/src/main/resources/pathTest.xlsx");

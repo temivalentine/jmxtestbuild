@@ -6,7 +6,7 @@ import com.jmxbuilder.jmx.type.BoolPropType;
 import com.jmxbuilder.jmx.type.HspBoolPropType;
 import com.jmxbuilder.jmx.type.HspStringPropType;
 import com.jmxbuilder.jmx.type.StringPropType;
-import com.jmxbuilder.jmx.utils.URLParser;
+import com.jmxbuilder.jmx.utils.ExcelParsing;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -28,7 +28,7 @@ import java.util.List;
  * -----------------------------------------------------------
  * 22. 11. 10.        im-happy-coder       최초 생성
  */
-public class ExcelParsing {
+public class JmxMarsharling {
     public static void main(String[] args) throws IOException {
         parsing();
     }
@@ -39,7 +39,7 @@ public class ExcelParsing {
 
         Hsp hsp = new Hsp();
         // Excel Data List 가져오기
-        hsp.setParamsList(URLParser.readExcel());
+        hsp.setParamsList(ExcelParsing.readExcel());
 
         HashMap<Enum, String> hmap = new HashMap<>();
 
@@ -61,6 +61,7 @@ public class ExcelParsing {
             hmap.put(HspStringPropType.CONNECTION_TIMEOUT, "");
             hmap.put(HspStringPropType.RESPONSE_TIMEOUT, "");
             hmap.put(HspStringPropType.COMMENTS, "");
+            hmap.put(HspStringPropType.METHOD, "GET");
             // HspBoolProp Data
             hmap.put(HspBoolPropType.FOLLOW_REDIRECTS, "true");
             hmap.put(HspBoolPropType.AUTO_REDIRECTS, "false");
@@ -76,7 +77,7 @@ public class ExcelParsing {
                 marshaller.setProperty(marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 
                 StringWriter sw = new StringWriter();
-                marshaller.marshal(ExcelParsing.httpSamplerProxy(hmap), sw);
+                marshaller.marshal(JmxMarsharling.httpHashTree(hmap), sw);
                 System.out.println(sw);
 
             } catch (JAXBException e) {
@@ -88,17 +89,31 @@ public class ExcelParsing {
         }
     }
 
-    /*
-            Parsing Data Method
-     */
+
+    // HTTPHashTree   | <hashTree/>  만들기
+    public static HTTPHashTree httpHashTree(HashMap<Enum, String> hmap) {
+        HTTPHashTree httpHashTree = new HTTPHashTree();
+        List<HTTPSamplerProxy> httpSamplerProxyList = new ArrayList<>();
+
+        //<hashTree/>  만들기  용
+        List<HashTree> hashTreeList = new ArrayList<>();
+        HashTree hashTree = new HashTree();
+        hashTreeList.add(hashTree);
+        httpHashTree.setHashTreeList(hashTreeList);
+
+        // HTTPSampleProxy 전체 HashTree
+        httpSamplerProxyList.add(httpSamplerProxy(hmap));
+        httpHashTree.setHttpSamplerProxyList(httpSamplerProxyList);
+        return httpHashTree;
+    }
+
+
     // HTTPSampleProxy
     public static HTTPSamplerProxy httpSamplerProxy(HashMap<Enum, String> hpmap) {
         HTTPSamplerProxy httpSamplerProxy = new HTTPSamplerProxy();
         List<ElementProp> elementPropList = new ArrayList<>();
         List<StringProp> stringPropList = new ArrayList<>();
         List<BoolProp> boolPropList = new ArrayList<>();
-        List<HTTPSamplerProxy> httpSamplerProxyList = new ArrayList<>();
-        List<HTTPHashTree> httpHashTreeList = new ArrayList<>();
 
         elementPropList.add(elementPropHSP(hpmap));
 

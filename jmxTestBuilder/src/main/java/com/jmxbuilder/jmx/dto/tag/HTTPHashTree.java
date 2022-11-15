@@ -3,10 +3,7 @@ package com.jmxbuilder.jmx.dto.tag;
 
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Data
@@ -16,6 +13,9 @@ public class HTTPHashTree {
 
     @XmlElement(name = "HTTPSamplerProxy")
     private List<HTTPSamplerProxy> httpSamplerProxyList;
+
+    @XmlElement(name = "hashTree")
+    private List<HashTree> hashTreeList;
 
 //    @XmlAnyElement(lax = true)
 //    List<T> list;
